@@ -89,83 +89,46 @@ function SunMark({ size = 40 }) {
 // ==================== HOME PAGE ====================
 function HomePage({ onOpenStation, onGoSearch }) {
   const data = window.ACQUA_DATA;
-  const [scrollY, setScrollY] = useState(0);
-  const scrollerRef = useRef(null);
-
-  const onScroll = (e) => setScrollY(e.target.scrollTop);
-
-  // Hero shrink interpolation — 0 expanded, 1 fully collapsed
-  // 260px de scroll para concluir a transicao (lento) + smoothstep (easing suave)
-  const raw = Math.min(1, Math.max(0, scrollY / 260));
-  const t = raw * raw * (3 - 2 * raw); // smoothstep: arranca devagar, termina devagar
-  const bigLogoOpacity = Math.max(0, 1 - t * 1.15);
-  const bigLogoScale = 1 - t * 0.18;
-  const subtitleOpacity = Math.max(0, 1 - t * 1.6);
-  const decorOpacity = 1 - t * 0.9;
-  const topLogoOpacity = Math.max(0, (t - 0.35) * 1.6);
 
   return (
-    <div className="page page-enter" style={{ background: '#FFF7EC' }}>
+    <div
+      className="page-enter"
+      style={{
+        position: 'absolute', inset: 0,
+        overflowY: 'auto', overflowX: 'hidden',
+        background: '#FFF7EC',
+        WebkitOverflowScrolling: 'touch',
+      }}
+    >
       {/* Hero */}
       <div
         className="hero"
         style={{
           paddingTop: 'max(28px, calc(env(safe-area-inset-top) + 16px))',
-          paddingBottom: 20 + (1 - t) * 30,
+          paddingBottom: 50,
           position: 'relative',
-          zIndex: 5,
         }}
       >
-        <div className="sun-bg" style={{ opacity: 0.9 * decorOpacity }}/>
-        <div style={{ opacity: decorOpacity }}>
-          <Palm side="left" top={80}/>
-          <Palm side="right" top={40}/>
-        </div>
+        <div className="sun-bg"/>
+        <Palm side="left" top={80}/>
+        <Palm side="right" top={40}/>
 
         {/* Top bar */}
         <div style={{
           display: 'flex',
-          justifyContent: 'space-between',
+          justifyContent: 'flex-end',
           alignItems: 'center',
           position: 'relative',
           zIndex: 3,
-          minHeight: 44,
-          gap: 12,
+          minHeight: 40,
         }}>
-          <img
-            src="logo.png"
-            alt=""
-            className="hero-top-logo"
-            style={{
-              height: 40,
-              width: 'auto',
-              display: 'block',
-              opacity: topLogoOpacity,
-              filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.25))',
-              pointerEvents: topLogoOpacity > 0.5 ? 'auto' : 'none',
-            }}
-          />
           <button style={pillBtn} onClick={onGoSearch}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
           </button>
         </div>
 
         {/* Big logo */}
-        <div
-          className="hero-big-logo"
-          style={{
-            textAlign: 'center',
-            marginTop: 16,
-            position: 'relative',
-            zIndex: 2,
-            maxHeight: (1 - t) * 320,
-            opacity: bigLogoOpacity,
-            transform: `scale(${bigLogoScale})`,
-            transformOrigin: 'center top',
-            overflow: 'hidden',
-            pointerEvents: bigLogoOpacity > 0.5 ? 'auto' : 'none',
-          }}
-        >
+        <div style={{ textAlign: 'center', marginTop: 16, position: 'relative', zIndex: 2 }}>
           <div className="pop-in" style={{ animationDelay: '0.1s' }}>
             <img
               src="logo.png"
@@ -180,22 +143,18 @@ function HomePage({ onOpenStation, onGoSearch }) {
               }}
             />
           </div>
-          <div
-            className="hero-subtitle fade-up"
-            style={{
-              color: '#fff', fontSize: 13, fontWeight: 500,
-              marginTop: 10, textShadow: '0 1px 2px rgba(0,0,0,0.25)',
-              animationDelay: '0.3s',
-              opacity: subtitleOpacity,
-            }}
-          >
+          <div className="fade-up" style={{
+            color: '#fff', fontSize: 13, fontWeight: 500,
+            marginTop: 10, textShadow: '0 1px 2px rgba(0,0,0,0.25)',
+            animationDelay: '0.3s',
+          }}>
             Escolha uma estação e bora matar a fome ✨
           </div>
         </div>
       </div>
 
-      {/* Body */}
-      <div ref={scrollerRef} onScroll={onScroll} className="scroll-y" style={{ flex: 1, position: 'relative' }}>
+      {/* Body (flow natural — rola junto com o hero) */}
+      <div style={{ position: 'relative' }}>
         {/* Featured strip */}
         <div style={{ padding: '18px 0 6px', background: '#FFF7EC' }}>
           <div className="content-wrap" style={{ marginBottom: 8, display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
@@ -246,12 +205,10 @@ function HomePage({ onOpenStation, onGoSearch }) {
         <div className="content-wrap stations-grid" style={{ paddingBottom: 100 }}>
           {data.stations.map((s, i) => {
             const itemCount = s.sections.reduce((n, sec) => n + sec.items.length, 0);
-            const p = scrollY * 0.02 * (i % 2 === 0 ? 1 : -1);
             return (
               <div key={s.id} className="station-card fade-up"
                 style={{
                   background: `linear-gradient(180deg, ${s.color} 0%, ${shade(s.color, -15)} 100%)`,
-                  transform: `translateY(${p}px)`,
                   animationDelay: `${0.2 + i * 0.05}s`,
                   aspectRatio: '1/1.05',
                 }}
