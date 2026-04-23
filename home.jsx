@@ -105,28 +105,30 @@ function HomePage({ onOpenStation, onGoSearch }) {
         <Palm side="right" top={40}/>
 
         {/* Top bar */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'relative', zIndex: 3 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-            <SunMark size={36}/>
-            <div style={{ fontFamily: 'Bowlby One', fontSize: 13, color: '#fff', lineHeight: 1 }}>
-              Acquaville<br/><span style={{ fontSize: 9, opacity: 0.85 }}>Park Show</span>
-            </div>
-          </div>
-          <div style={{ display: 'flex', gap: 8 }}>
-            <button style={pillBtn} onClick={onGoSearch}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-            </button>
-          </div>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', position: 'relative', zIndex: 3, minHeight: 40 }}>
+          <button style={pillBtn} onClick={onGoSearch}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          </button>
         </div>
 
-        {/* Big sticker logo */}
-        <div style={{ textAlign: 'center', margin: '24px 0 8px', position: 'relative', zIndex: 2 }}>
+        {/* Logo */}
+        <div style={{ textAlign: 'center', margin: '16px 0 4px', position: 'relative', zIndex: 2 }}>
           <div className="pop-in" style={{ animationDelay: '0.1s' }}>
-            <AcquaLogo size={1.05}/>
+            <img
+              src="logo.png"
+              alt="Acquaville Park Show"
+              style={{
+                width: 'min(72%, 220px)',
+                height: 'auto',
+                display: 'block',
+                margin: '0 auto',
+                filter: 'drop-shadow(0 6px 14px rgba(0,0,0,0.2))',
+              }}
+            />
           </div>
           <div className="fade-up" style={{
             color: '#fff', fontSize: 13, fontWeight: 500,
-            marginTop: 8, textShadow: '0 1px 2px rgba(0,0,0,0.25)',
+            marginTop: 10, textShadow: '0 1px 2px rgba(0,0,0,0.25)',
             animationDelay: '0.3s',
           }}>
             Escolha uma estação e bora matar a fome ✨
