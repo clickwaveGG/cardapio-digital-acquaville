@@ -179,11 +179,12 @@ function StationPage({ stationId, onBack }) {
         {filteredSections.map((sec, si) => (
           <div key={sec.name}
             ref={el => sectionRefs.current[sec.name] = el}
-            style={{ padding: '18px 20px 12px' }}>
+            className="content-wrap"
+            style={{ padding: '18px 0 12px' }}>
             <div className="section-title" style={{ color: window.shade(station.color, -20), marginBottom: 12 }}>
               {sec.name}
             </div>
-            <div>
+            <div className="items-grid">
               {sec.items.map((it, i) => (
                 <div key={it.name + i} className="item-row fade-up" style={{ animationDelay: `${Math.min(i * 0.03, 0.3)}s` }}>
                   <div style={{ flex: '0 1 auto', maxWidth: '60%' }}>
