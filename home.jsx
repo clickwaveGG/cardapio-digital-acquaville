@@ -98,7 +98,7 @@ function HomePage({ onOpenStation, onGoSearch }) {
     <div className="page page-enter" style={{ background: '#FFF7EC' }}>
       {/* Hero */}
       <div className="hero" style={{
-        paddingTop: 60,
+        paddingTop: 'max(28px, calc(env(safe-area-inset-top) + 16px))',
       }}>
         <div className="sun-bg"/>
         <Palm side="left" top={80}/>

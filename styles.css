@@ -6,12 +6,53 @@
 html, body {
   margin: 0; padding: 0;
   font-family: 'Fredoka', system-ui, sans-serif;
-  background: #f0f4f7;
+  background: var(--paper, #FFFDF9);
   color: #0a2540;
+  overflow: hidden;
+  height: 100%;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
   overflow: hidden;
 }
 
-#root { width: 100vw; height: 100vh; overflow: hidden; }
+/* -------- App shell (mobile fullscreen) -------- */
+.app-shell {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: var(--paper);
+  overflow: hidden;
+}
+
+/* Desktop: center mobile-sized canvas with tropical backdrop */
+@media (min-width: 768px) {
+  body {
+    background: linear-gradient(135deg, #00AEEF 0%, #0284C7 50%, #F39200 100%);
+    background-size: 200% 200%;
+    animation: bgShift 20s ease infinite;
+  }
+  #root {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .app-shell {
+    width: min(100%, 430px);
+    height: min(100%, 900px);
+    border-radius: 28px;
+    box-shadow: 0 30px 80px rgba(10,37,64,0.35);
+  }
+}
+
+@keyframes bgShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
 
 /* -------- Tokens -------- */
 :root {
@@ -193,7 +234,7 @@ html, body {
 /* -------- Bottom nav -------- */
 .bottom-nav {
   display: flex; justify-content: space-around; align-items: center;
-  padding: 10px 0 14px;
+  padding: 10px 0 max(14px, env(safe-area-inset-bottom));
   background: rgba(255,255,255,0.95);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
@@ -296,48 +337,6 @@ html, body {
 }
 
 /* scroll-driven parallax helper classes applied inline */
-
-/* phone frame */
-.phone-shell {
-  width: 390px; height: 844px;
-  background: #111;
-  border-radius: 54px;
-  padding: 10px;
-  box-shadow: 0 30px 60px rgba(0,0,0,0.35), 0 0 0 2px #222 inset;
-  position: relative;
-}
-.phone-screen {
-  width: 100%; height: 100%;
-  border-radius: 44px;
-  overflow: hidden;
-  position: relative;
-  background: var(--paper);
-}
-.phone-notch {
-  position: absolute;
-  top: 14px; left: 50%; transform: translateX(-50%);
-  width: 120px; height: 32px;
-  background: #000; border-radius: 999px;
-  z-index: 100;
-}
-.phone-home-indicator {
-  position: absolute;
-  bottom: 18px; left: 50%; transform: translateX(-50%);
-  width: 134px; height: 5px;
-  background: #fff; border-radius: 999px;
-  z-index: 100;
-  mix-blend-mode: difference;
-}
-
-.ios-status {
-  height: 50px;
-  padding: 16px 28px 0;
-  display: flex; justify-content: space-between; align-items: center;
-  font-size: 15px; font-weight: 600;
-  color: var(--ink);
-  position: relative; z-index: 10;
-}
-.ios-status.on-color { color: #fff; }
 
 /* -------- animated price counter */
 .price-count { display: inline-block; font-variant-numeric: tabular-nums; }

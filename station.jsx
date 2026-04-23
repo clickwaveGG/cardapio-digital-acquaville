@@ -55,7 +55,7 @@ function StationPage({ stationId, onBack }) {
       <div style={{
         position: 'relative',
         background: `linear-gradient(180deg, ${station.color} 0%, ${window.shade(station.color, -18)} 100%)`,
-        paddingTop: 60,
+        paddingTop: 'max(28px, calc(env(safe-area-inset-top) + 16px))',
         paddingBottom: 50,
         overflow: 'hidden',
       }}>
