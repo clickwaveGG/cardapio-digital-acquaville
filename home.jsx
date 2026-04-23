@@ -95,12 +95,14 @@ function HomePage({ onOpenStation, onGoSearch }) {
   const onScroll = (e) => setScrollY(e.target.scrollTop);
 
   // Hero shrink interpolation — 0 expanded, 1 fully collapsed
-  const t = Math.min(1, Math.max(0, scrollY / 110));
-  const bigLogoOpacity = Math.max(0, 1 - t * 1.6);
-  const bigLogoScale = 1 - t * 0.25;
-  const subtitleOpacity = Math.max(0, 1 - t * 2);
-  const decorOpacity = 1 - t;
-  const topLogoOpacity = Math.max(0, (t - 0.25) * 1.8);
+  // 260px de scroll para concluir a transicao (lento) + smoothstep (easing suave)
+  const raw = Math.min(1, Math.max(0, scrollY / 260));
+  const t = raw * raw * (3 - 2 * raw); // smoothstep: arranca devagar, termina devagar
+  const bigLogoOpacity = Math.max(0, 1 - t * 1.15);
+  const bigLogoScale = 1 - t * 0.18;
+  const subtitleOpacity = Math.max(0, 1 - t * 1.6);
+  const decorOpacity = 1 - t * 0.9;
+  const topLogoOpacity = Math.max(0, (t - 0.35) * 1.6);
 
   return (
     <div className="page page-enter" style={{ background: '#FFF7EC' }}>
