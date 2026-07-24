@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cardápio Acquaville — Versão para Impressão A4</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --ink: #1d2733;
+    --ink-soft: #5a6675;
+    --paper: #ffffff;
+  }
+
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  body {
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    background: #e8ebef;
+    color: var(--ink);
+  }
+
+  /* ── Toolbar (só na tela) ─────────────────────────── */
+  .toolbar {
+    position: sticky; top: 0; z-index: 10;
+    background: #101820; color: #fff;
+    padding: 12px 20px;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+  }
+  .toolbar strong { margin-right: 8px; font-size: 14px; }
+  .toolbar a, .toolbar button {
+    font-size: 12.5px; text-decoration: none; cursor: pointer;
+    padding: 6px 12px; border-radius: 999px;
+    background: #2a3644; color: #fff; border: none;
+  }
+  .toolbar a.active { background: #00AEEF; }
+  .toolbar button.print { background: #F39200; font-weight: 700; }
+
+  /* ── Página A4 ────────────────────────────────────── */
+  .page {
+    width: 210mm; min-height: 296mm;
+    margin: 16px auto; padding: 13mm 13mm 15mm;
+    background: var(--paper);
+    box-shadow: 0 4px 18px rgba(0,0,0,.18);
+    display: flex; flex-direction: column;
+    position: relative; overflow: hidden;
+  }
+
+  .page-band {
+    position: absolute; top: 0; left: 0; right: 0; height: 7mm;
+    background: var(--accent);
+  }
+
+  .page-head {
+    display: flex; align-items: center; gap: 6mm;
+    padding: 6mm 0 4mm; border-bottom: 1.2mm solid var(--accent);
+  }
+  .head-icon {
+    width: 19mm; height: 19mm; border-radius: 50%;
+    background: var(--accent-soft);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10mm; flex-shrink: 0;
+  }
+  .head-txt { flex: 1; }
+  .head-txt h1 { font-size: 8.4mm; line-height: 1.05; letter-spacing: -.02em; }
+  .head-txt h1 small { font-size: 4.4mm; font-weight: 600; color: var(--ink-soft); display: block; }
+  .head-meta { text-align: right; font-size: 3.6mm; color: var(--ink-soft); line-height: 1.5; }
+  .head-meta .hours {
+    display: inline-block; background: var(--accent); color: #fff;
+    font-weight: 700; padding: 1mm 3.5mm; border-radius: 999px; font-size: 3.4mm;
+  }
+
+  /* ── Seções em colunas ────────────────────────────── */
+  .page-body { flex: 1; column-count: 2; column-gap: 8mm; padding-top: 4.5mm; }
+  .page-body.single { column-count: 1; max-width: 150mm; margin: 0 auto; width: 100%; }
+
+  .section { break-inside: avoid; margin-bottom: 5.5mm; }
+  .section h2 {
+    font-size: 3.9mm; letter-spacing: .09em;
+    color: #fff; background: var(--accent);
+    padding: 1.6mm 3mm; border-radius: 1.5mm 1.5mm 0 0;
+  }
+  .section ul { list-style: none; border: .35mm solid var(--accent-soft); border-top: none; padding: 1.8mm 3mm 2.2mm; border-radius: 0 0 1.5mm 1.5mm; }
+
+  .item { padding: 1.15mm 0; break-inside: avoid; }
+  .item-row { display: flex; align-items: baseline; gap: 2mm; }
+  .item-name { font-size: 3.55mm; font-weight: 600; }
+  .item-dots { flex: 1; border-bottom: .3mm dotted #b9c2cc; transform: translateY(-.9mm); }
+  .item-price { font-size: 3.55mm; font-weight: 700; white-space: nowrap; }
+  .item-desc { font-size: 3mm; color: var(--ink-soft); line-height: 1.35; padding-top: .4mm; }
+
+  /* Modo compacto — páginas com muitos itens */
+  .page.dense .page-head { padding: 5mm 0 3mm; }
+  .page.dense .head-icon { width: 15mm; height: 15mm; font-size: 8mm; }
+  .page.dense .head-txt h1 { font-size: 7mm; }
+  .page.dense .page-body { padding-top: 3mm; column-gap: 6mm; }
+  .page.dense .section { margin-bottom: 3.6mm; }
+  .page.dense .section h2 { font-size: 3.4mm; padding: 1.2mm 2.5mm; }
+  .page.dense .section ul { padding: 1.2mm 2.5mm 1.6mm; }
+  .page.dense .item { padding: .7mm 0; }
+  .page.dense .item-name, .page.dense .item-price { font-size: 3.2mm; }
+  .page.dense .item-desc { font-size: 2.65mm; line-height: 1.28; }
+
+  .page-foot {
+    padding-top: 3.5mm; margin-top: 2mm;
+    border-top: .35mm solid #dfe4e9;
+    display: flex; justify-content: space-between;
+    font-size: 3mm; color: var(--ink-soft);
+  }
+
+  /* ── Impressão ────────────────────────────────────── */
+  @page { size: A4 portrait; margin: 0; }
+  @media print {
+    body { background: #fff; }
+    .toolbar { display: none; }
+    .page {
+      margin: 0; box-shadow: none;
+      width: 210mm; min-height: 296mm;
+      page-break-after: always;
+    }
+    .page:last-child { page-break-after: auto; }
+  }
+</style>
+</head>
+<body>
+<div class="toolbar" id="toolbar">
+  <strong>🖨️ Impressão A4</strong>
+  <button class="print" onclick="window.print()">Imprimir / Salvar PDF</button>
+</div>
+<div id="pages"></div>
+
+<script src="menu-data.js"></script>
+<script>
+  const fmt = v => 'R$ ' + v.toFixed(2).replace('.', ',');
+  const params = new URLSearchParams(location.search);
+  const only = params.get('station');
+
+  const stations = window.ACQUA_DATA.stations.filter(s => !only || s.id === only);
+
+  // Links da toolbar
+  const bar = document.getElementById('toolbar');
+  const mkLink = (href, label, active) => {
+    const a = document.createElement('a');
+    a.href = href; a.textContent = label;
+    if (active) a.className = 'active';
+    bar.appendChild(a);
+  };
+  mkLink('print.html', 'Todas', !only);
+  window.ACQUA_DATA.stations.forEach(s =>
+    mkLink('print.html?station=' + s.id, s.icon + ' ' + s.name, only === s.id));
+
+  // Páginas
+  const esc = t => String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+  const root = document.getElementById('pages');
+
+  stations.forEach(st => {
+    const totalItems = st.sections.reduce((n, s) => n + s.items.length, 0);
+    const single = totalItems <= 10;
+    const dense = totalItems > 38;
+
+    const sectionsHtml = st.sections.map(sec => `
+      <div class="section">
+        <h2>${esc(sec.name)}</h2>
+        <ul>
+          ${sec.items.map(it => `
+            <li class="item">
+              <div class="item-row">
+                <span class="item-name">${esc(it.name)}</span>
+                <span class="item-dots"></span>
+                <span class="item-price">${fmt(it.price)}</span>
+              </div>
+              ${it.desc ? `<div class="item-desc">${esc(it.desc)}</div>` : ''}
+            </li>`).join('')}
+        </ul>
+      </div>`).join('');
+
+    const page = document.createElement('div');
+    page.className = 'page' + (dense ? ' dense' : '');
+    page.style.setProperty('--accent', st.color);
+    page.style.setProperty('--accent-soft', st.colorSoft);
+    page.innerHTML = `
+      <div class="page-band"></div>
+      <div class="page-head">
+        <div class="head-icon">${st.icon}</div>
+        <div class="head-txt">
+          <h1>${esc(st.name)} ${st.subtitle ? `<small>${esc(st.subtitle)}</small>` : ''}</h1>
+        </div>
+        <div class="head-meta">
+          <span class="hours">⏰ ${esc(st.hours)}</span><br>
+          ${esc(st.tagline)}
+        </div>
+      </div>
+      <div class="page-body ${single ? 'single' : ''}">${sectionsHtml}</div>
+      <div class="page-foot">
+        <span>Acquaville Park Show · Cardápio Oficial</span>
+        <span>${st.icon} ${esc(st.name)}</span>
+      </div>`;
+    root.appendChild(page);
+  });
+</script>
+</body>
+</html>
