@@ -68,13 +68,13 @@ window.ACQUA_DATA = {
         {
           name: 'BEBIDAS',
           items: [
-            { name: 'Água Mineral com gás 500ml', price: 4, tags: ['bebida','sem-alcool'] },
-            { name: 'Água Mineral sem gás 500ml', price: 3, tags: ['bebida','sem-alcool'] },
-            { name: 'Amstel Lata 350ml', price: 6.50, tags: ['bebida','com-alcool'] },
+            { name: 'Água Mineral com gás 500ml', price: 5, tags: ['bebida','sem-alcool'] },
+            { name: 'Água Mineral sem gás 500ml', price: 4, tags: ['bebida','sem-alcool'] },
+            { name: 'Amstel Lata 350ml', price: 7, tags: ['bebida','com-alcool'] },
             { name: 'Guaraná Antarctica Lata', price: 6, tags: ['bebida','sem-alcool'] },
             { name: 'Guaraná Antarctica Zero Lata', price: 6, tags: ['bebida','sem-alcool'] },
             { name: 'Pepsi Lata', price: 6, tags: ['bebida','sem-alcool'] },
-            { name: 'Soda Limonada Lata', price: 4, tags: ['bebida','sem-alcool'] },
+            { name: 'Soda Limonada Lata', price: 6, tags: ['bebida','sem-alcool'] },
             { name: 'Sukita Lata', price: 6, tags: ['bebida','sem-alcool'] },
             { name: 'Suco de Manga', price: 4, tags: ['bebida','sem-alcool'] },
             { name: 'Suco de Maracujá', price: 4, tags: ['bebida','sem-alcool'] },
@@ -221,8 +221,8 @@ window.ACQUA_DATA = {
           items: [
             { name: 'Açaí 400ml', price: 25, tags: ['doce'], featured: true },
             { name: 'Milk Shake 500ml', price: 25, tags: ['doce','bebida'], featured: true },
-            { name: 'Água mineral 500ml', price: 3, tags: ['bebida','sem-alcool'] },
-            { name: 'Água mineral com gás 500ml', price: 4, tags: ['bebida','sem-alcool'] },
+            { name: 'Água mineral 500ml', price: 4, tags: ['bebida','sem-alcool'] },
+            { name: 'Água mineral com gás 500ml', price: 5, tags: ['bebida','sem-alcool'] },
             { name: 'Açaí zero 400ml', price: 30, tags: ['doce'] },
           ],
         },
@@ -271,15 +271,15 @@ window.ACQUA_DATA = {
         {
           name: 'GELADOS',
           items: [
-            { name: 'Água com gás', price: 4, tags: ['bebida','sem-alcool'] },
+            { name: 'Água com gás', price: 5, tags: ['bebida','sem-alcool'] },
             { name: 'Água de coco', price: 8, tags: ['bebida','sem-alcool'] },
-            { name: 'Água sem gás', price: 3, tags: ['bebida','sem-alcool'] },
-            { name: 'Amstel lata', price: 6.50, tags: ['bebida','com-alcool'] },
+            { name: 'Água sem gás', price: 4, tags: ['bebida','sem-alcool'] },
+            { name: 'Amstel lata', price: 7, tags: ['bebida','com-alcool'] },
             { name: 'Chopp Heineken 430ml', price: 15, tags: ['bebida','com-alcool'], featured: true },
             { name: 'Gatorade', price: 10, tags: ['bebida','sem-alcool'] },
-            { name: 'H2O', price: 7, tags: ['bebida','sem-alcool'] },
-            { name: 'Heineken 0% álcool lata', price: 8.50, tags: ['bebida','sem-alcool'] },
-            { name: 'Heineken lata', price: 8.50, tags: ['bebida','com-alcool'] },
+            { name: 'H2O', price: 6, tags: ['bebida','sem-alcool'] },
+            { name: 'Heineken 0% álcool lata', price: 9, tags: ['bebida','sem-alcool'] },
+            { name: 'Heineken lata', price: 9, tags: ['bebida','com-alcool'] },
             { name: 'Red Bull', price: 15, tags: ['bebida','sem-alcool'] },
             { name: 'Refrigerante', price: 6, tags: ['bebida','sem-alcool'] },
             { name: 'Skol Beats', price: 10, tags: ['bebida','com-alcool'] },
@@ -288,8 +288,8 @@ window.ACQUA_DATA = {
         {
           name: 'COMBOS',
           items: [
-            { name: 'Combo Amstel (6 unidades)', price: 36, tags: ['bebida','com-alcool'], featured: true },
-            { name: 'Combo Heineken (6 unidades)', price: 48, tags: ['bebida','com-alcool'], featured: true },
+            { name: 'Combo Amstel (6 unidades)', price: 39, tags: ['bebida','com-alcool'], featured: true },
+            { name: 'Combo Heineken (6 unidades)', price: 51, tags: ['bebida','com-alcool'], featured: true },
           ],
         },
         {
